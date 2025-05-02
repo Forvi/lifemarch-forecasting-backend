@@ -5,6 +5,8 @@
 
 ```
 ./gradlew bootJar
+```
+```
 docker-compose up
 ```
 4. Перейти на http://localhost:8080/swagger-ui/index.html
