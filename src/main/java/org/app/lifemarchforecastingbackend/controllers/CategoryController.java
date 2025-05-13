@@ -52,7 +52,7 @@ public class CategoryController {
             description = "Позволяет вернуть все категории с указанной подстрокой")
     public ResponseEntity<List<CategoryDto>> getCategoryByName(@PathVariable String name)
             throws OperationErrorException {
-        var result = categoryService.getCategoryByName(name);
+        var result = categoryService.getCategoryByNameSubstring(name);
         return ResponseEntity.ok(result);
     }
 
@@ -64,4 +64,5 @@ public class CategoryController {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.ok().build();
     }
+
 }

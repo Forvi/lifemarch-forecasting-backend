@@ -25,6 +25,9 @@ public class CategoryService {
     private final CategoryMapper mapper;
 
 
+    /**
+     * Создать категорию
+     * */
     public CategoryDto createCategory(String name) {
         try {
             log.debug("Creating new category: {}...", name);
@@ -45,6 +48,9 @@ public class CategoryService {
         }
     }
 
+    /**
+     * Получить все категории
+     * */
     public List<CategoryDto> getAllCategories() {
         try {
             log.debug("Getting all categories...");
@@ -63,6 +69,9 @@ public class CategoryService {
         }
     }
 
+    /**
+     * Получить категорию по ID
+     * */
     public CategoryDto getCategoryById(Long id) {
         try {
             log.debug("Getting category with id: {}...", id);
@@ -80,7 +89,28 @@ public class CategoryService {
         }
     }
 
-    public List<CategoryDto> getCategoryByName(String name) {
+    /**
+     * Получить категорию по имени
+     * */
+    public CategoryDto getCategoryByName(String name) {
+        try {
+            log.debug("Getting category with name: {}...", name);
+
+            CategoryEntity category = categoryRepo.findByName(name);
+
+            log.info("Found category: {}", name);
+
+            return mapper.toDto(category);
+        } catch (OperationErrorException e) {
+            log.error("Failed to get category with id: {}", name, e);
+            throw new OperationErrorException("Error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Получить категорию по подстроке имени
+     * */
+    public List<CategoryDto> getCategoryByNameSubstring(String name) {
         try {
             log.debug("Getting category with name: {}...", name);
 
@@ -98,6 +128,9 @@ public class CategoryService {
         }
     }
 
+    /**
+     * Удалить категорию по ID
+     * */
     public void deleteCategoryById(Long id) {
         log.debug("Deleting category with id: {}...", id);
 

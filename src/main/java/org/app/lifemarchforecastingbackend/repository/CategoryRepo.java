@@ -11,4 +11,5 @@ public interface CategoryRepo extends JpaRepository<CategoryEntity, Long> {
     List<CategoryEntity> findByNameStartingWith(String prefix);
     List<CategoryEntity> findByNameEndingWith(String suffix);
     List<CategoryEntity> findByNameContainingIgnoreCase(String snippet);
+    CategoryEntity findByName(String name);
 }
