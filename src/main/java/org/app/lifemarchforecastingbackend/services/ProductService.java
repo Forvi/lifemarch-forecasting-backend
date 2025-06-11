@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryDto;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryMapper;
+import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
 import org.app.lifemarchforecastingbackend.dto.productDtos.ProductMapper;
 import org.app.lifemarchforecastingbackend.entities.CategoryEntity;
 import org.app.lifemarchforecastingbackend.entities.ProductEntity;
@@ -12,6 +13,7 @@ import org.app.lifemarchforecastingbackend.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -22,7 +24,47 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
+    private final ProductMapper productMapper;
 
+    // Получить все товары
+    public List<ProductDto> getAllProducts() {
+        try {
+            log.debug("Getting all products...");
+
+            List<ProductDto> products = productRepo
+                    .findAll()
+                    .stream()
+                    .map(productMapper::toDto)
+                    .toList();
+
+            log.info("{} products found", products.size());
+            return products;
+        } catch (OperationErrorException e) {
+            log.error("Failed to get products");
+            throw new OperationErrorException("Error: " + e.getMessage());
+        }
+    }
+
+    // Получить товар по подстроке
+    public List<ProductDto> getProductByNameSubstring(String name) {
+        try {
+            log.debug("Getting product with name: {}...", name);
+
+            List<ProductDto> product = productRepo.findByNameContainingIgnoreCase(name)
+                    .stream()
+                    .map(productMapper::toDto)
+                    .toList();
+
+            log.info("Found {} products by {}", product.size(), name);
+
+            return product;
+        } catch (OperationErrorException e) {
+            log.error("Failed to get product with name: {}", name, e);
+            throw new OperationErrorException("Error: " + e.getMessage());
+        }
+    }
+
+    // Создать товар
     public void createProduct(String name, Integer quantityBuy,
                               BigDecimal costPrice, String categoryName) {
 
@@ -52,6 +94,7 @@ public class ProductService {
         }
     }
 
+    // Валидация входных данных на метод создания товара
     private void validateCreateInput(String name, Integer quantityBuy,
                                 BigDecimal costPrice, String categoryName) {
 

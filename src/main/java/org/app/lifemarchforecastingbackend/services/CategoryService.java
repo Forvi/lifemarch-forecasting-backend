@@ -28,7 +28,7 @@ public class CategoryService {
      * */
     public CategoryDto createCategory(String name) {
         try {
-            log.info("Creating new category: {}...", name);
+            log.debug("Creating new category: {}...", name);
 
             log.info("Validity check...");
             Objects.requireNonNull(name, "Name cannot be null");
@@ -110,7 +110,7 @@ public class CategoryService {
 
             return mapper.toDto(category);
         } catch (OperationErrorException e) {
-            log.error("Failed to get category with id: {}", name, e);
+            log.error("Failed to get category with name: {}", name, e);
             throw new OperationErrorException("Error: " + e.getMessage());
         }
     }
