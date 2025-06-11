@@ -7,7 +7,6 @@ import org.app.lifemarchforecastingbackend.entities.CategoryEntity;
 import org.app.lifemarchforecastingbackend.exceptions.NotFoundException;
 import org.app.lifemarchforecastingbackend.exceptions.OperationErrorException;
 import org.app.lifemarchforecastingbackend.repository.CategoryRepo;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,30 +20,39 @@ public class CategoryService {
 
     private final CategoryRepo categoryRepo;
 
-    @Qualifier("categoryMapperImpl")
+//    @Qualifier("categoryMapperImpl")
     private final CategoryMapper mapper;
-
 
     /**
      * Создать категорию
      * */
     public CategoryDto createCategory(String name) {
         try {
-            log.debug("Creating new category: {}...", name);
+            log.info("Creating new category: {}...", name);
 
+            log.info("Validity check...");
             Objects.requireNonNull(name, "Name cannot be null");
+
             if (name.isBlank())
-                throw new OperationErrorException("Name cannot bee empty");
+                throw new OperationErrorException("Name cannot be empty");
+            log.info("The data is valid");
+
+            CategoryEntity existingCategory = categoryRepo.findByName(name);
+            if (existingCategory != null) {
+
+                log.info("Category {} already exists", existingCategory);
+                return mapper.toDto(existingCategory);
+            }
 
             CategoryEntity category = new CategoryEntity();
             category.setName(name);
             CategoryEntity savedCategory = categoryRepo.save(category);
 
-            log.info("Created category : {}", name);
+            log.info("Created category: {}", name);
             return mapper.toDto(savedCategory);
         } catch (OperationErrorException e) {
             log.error("Failed to create category: {}", name, e);
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 

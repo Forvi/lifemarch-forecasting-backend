@@ -10,7 +10,9 @@ import lombok.*;
  * Необходим для фильтрации.
  */
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

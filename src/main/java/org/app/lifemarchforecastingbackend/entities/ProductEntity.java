@@ -4,16 +4,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryDto;
+
+import java.math.BigDecimal;
 
 /**
  *
  * Сущность товара.
- * Необходим для отдельного хранения каждого товара
- * в базе данных.
+ * Необходим для отдельного хранения каждого товара в базе данных.
  *
  */
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,8 +35,18 @@ public class ProductEntity {
     @Column(unique = true, nullable = false, name = "product_name")
     private String name;
 
+    @Schema(description = "Спрогнозированное количество для покупки")
+    @Column(nullable = false, name = "quantity_buy")
+    private Integer quantityBuy;
+
+    @Schema(description = "Себестоимость товара")
+    @Column(nullable = false, name = "cost_price")
+    private BigDecimal costPrice;
+
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     @Schema(description = "Категория продукта")
     private CategoryEntity category;
+
 }
