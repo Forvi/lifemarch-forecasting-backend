@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,6 +44,31 @@ public class ProductController {
             description = "Позволяет получить все товары по подстроке названия товара")
     public ResponseEntity<List<ProductDto>> getProductsBySubstringName(String name) {
         return ResponseEntity.ok(productService.getProductByNameSubstring(name));
+    }
+
+    @GetMapping("/getbycategories")
+    @Operation(
+            summary = "Получить товар по категории",
+            description = "Позволяет получить все товары с указанными в списке категориями")
+    public ResponseEntity<List<ProductDto>> getProductsByCategories(@RequestParam List<String> categories) {
+        return ResponseEntity.ok(productService.getProductsByCategory(categories));
+    }
+
+    @GetMapping("/getbyid")
+    @Operation(
+            summary = "Получить товар по ID",
+            description = "Позволяет получить товар по уникальному идентификатору")
+    public ResponseEntity<ProductDto> getProductsById(Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(
+            summary = "Получить все товары",
+            description = "Позволяет получить все товары")
+    public ResponseEntity<Void> deleteProductById(Long id) {
+        productService.deleteProductById(id);
+        return ResponseEntity.ok().build();
     }
 
 }
