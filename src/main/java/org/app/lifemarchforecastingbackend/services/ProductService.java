@@ -8,6 +8,7 @@ import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
 import org.app.lifemarchforecastingbackend.dto.productDtos.ProductMapper;
 import org.app.lifemarchforecastingbackend.entities.CategoryEntity;
 import org.app.lifemarchforecastingbackend.entities.ProductEntity;
+import org.app.lifemarchforecastingbackend.exceptions.NotFoundException;
 import org.app.lifemarchforecastingbackend.exceptions.OperationErrorException;
 import org.app.lifemarchforecastingbackend.repository.ProductRepo;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +50,7 @@ public class ProductService {
     // Получить товар по подстроке
     public List<ProductDto> getProductByNameSubstring(String name) {
         try {
-            log.debug("Getting product with name: {}...", name);
+            log.debug("Getting products with name: {}...", name);
 
             List<ProductDto> product = productRepo.findByNameContainingIgnoreCase(name)
                     .stream()
@@ -114,4 +116,56 @@ public class ProductService {
         }
     }
 
+    public void deleteProductById(Long id) {
+        try {
+            log.debug("Deleting product with id: {}...", id);
+
+            ProductEntity product = productRepo
+                    .findById(id)
+                    .orElseThrow(() -> new NotFoundException("Product not found"));
+
+            productRepo.delete(product);
+            log.info("Deleted product: {}", product.getName());
+        } catch (OperationErrorException e) {
+            log.error("Failed to delete product with id {}", id, e);
+            throw e;
+        }
+    }
+
+    public ProductDto getProductById(Long id) {
+        try {
+            log.debug("Getting product with id: {}...", id);
+
+            ProductEntity product = productRepo
+                    .findById(id)
+                    .orElseThrow(() -> new NotFoundException("Product not found"));
+
+            log.info("Product {} found", product.getName());
+
+            return productMapper.toDto(product);
+        } catch (OperationErrorException e) {
+            log.error("Failed to get product with id: {}", id, e);
+            throw e;
+        }
+    }
+
+    public List<ProductDto> getProductsByCategory(List<String> categories) {
+        try {
+            log.debug("Getting products...");
+            log.info("Validate list");
+            if (categories.isEmpty()) {
+                throw new NullPointerException("Categories cannot be empty or null");
+            }
+
+            log.info("List is valid");
+            return productRepo
+                    .findByCategories(categories)
+                    .stream()
+                    .map(productMapper::toDto)
+                    .toList();
+        } catch (OperationErrorException e) {
+            log.error("Failed to get products", e);
+            throw e;
+        }
+    }
 }

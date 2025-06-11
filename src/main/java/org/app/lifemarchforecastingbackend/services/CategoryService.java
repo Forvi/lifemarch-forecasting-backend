@@ -19,8 +19,6 @@ import java.util.Objects;
 public class CategoryService {
 
     private final CategoryRepo categoryRepo;
-
-//    @Qualifier("categoryMapperImpl")
     private final CategoryMapper mapper;
 
     /**
@@ -73,7 +71,7 @@ public class CategoryService {
             return category;
         } catch (OperationErrorException e) {
             log.error("Failed to get categories");
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -93,7 +91,7 @@ public class CategoryService {
             return mapper.toDto(category);
         } catch (OperationErrorException e) {
             log.error("Failed to get category with id: {}", id, e);
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -111,7 +109,7 @@ public class CategoryService {
             return mapper.toDto(category);
         } catch (OperationErrorException e) {
             log.error("Failed to get category with name: {}", name, e);
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -132,7 +130,7 @@ public class CategoryService {
             return category;
         } catch (OperationErrorException e) {
             log.error("Failed to get category with id: {}", name, e);
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -140,13 +138,18 @@ public class CategoryService {
      * Удалить категорию по ID
      * */
     public void deleteCategoryById(Long id) {
-        log.debug("Deleting category with id: {}...", id);
+        try {
+            log.debug("Deleting category with id: {}...", id);
 
-        CategoryEntity category = categoryRepo
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Category not found"));
+            CategoryEntity category = categoryRepo
+                    .findById(id)
+                    .orElseThrow(() -> new NotFoundException("Category not found"));
 
-        categoryRepo.delete(category);
-        log.info("Deleted category: {}", category.getName());
+            categoryRepo.delete(category);
+            log.info("Deleted category: {}", category.getName());
+        } catch (OperationErrorException e) {
+            log.error("Failed to delete categoty with id {}", id, e);
+            throw e;
+        }
     }
 }
