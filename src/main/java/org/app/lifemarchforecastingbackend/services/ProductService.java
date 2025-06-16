@@ -1,5 +1,7 @@
 package org.app.lifemarchforecastingbackend.services;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryDto;
@@ -22,6 +24,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
+
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
@@ -165,6 +170,20 @@ public class ProductService {
                     .toList();
         } catch (OperationErrorException e) {
             log.error("Failed to get products", e);
+            throw e;
+        }
+    }
+
+    // Удаляет все товары из таблицы
+    public void deleteAllProducts() {
+        log.debug("Starting to delete all products...");
+
+        try {
+            productRepo.deleteAllInBatch();
+            entityManager.clear();
+            log.info("All products deleted");
+        } catch (OperationErrorException e) {
+            log.error("Failed to delete all products", e);
             throw e;
         }
     }

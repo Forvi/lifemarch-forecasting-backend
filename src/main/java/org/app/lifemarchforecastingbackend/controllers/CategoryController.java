@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Сущность категорий.
+ */
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Категории", description = "Все необходимые действия с категориями товаров")

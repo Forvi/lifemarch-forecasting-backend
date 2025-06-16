@@ -26,13 +26,13 @@ import java.math.BigDecimal;
 public class ProductEntity {
 
     @Id
-    @Schema(description = "Уникальный ID продукта")
+    @Schema(description = "Артикул товара")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Schema(description = "Наименование продукта")
-    @Size(min = 2, max = 50, message = "Название продукта должно быть от 2 до 50 символов")
-    @Column(unique = false, nullable = false, name = "product_name")
+    @Schema(description = "Наименование товара")
+    @Size(min = 2, max = 50, message = "Название товара должно быть от 2 до 50 символов")
+    @Column(nullable = false, name = "product_name")
     private String name;
 
     @Schema(description = "Спрогнозированное количество для покупки")
@@ -46,7 +46,7 @@ public class ProductEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    @Schema(description = "Категория продукта")
+    @Schema(description = "Категория товара")
     private CategoryEntity category;
 
 }
