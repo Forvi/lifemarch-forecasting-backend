@@ -3,6 +3,8 @@ package org.app.lifemarchforecastingbackend.dto.historyDto;
 import org.app.lifemarchforecastingbackend.entities.HistoryEntity;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDate;
+
 @Mapper(componentModel = "spring")
 public interface HistoryMapper {
 
@@ -10,6 +12,7 @@ public interface HistoryMapper {
     HistoryEntity toEntity(HistoryDto dto);
 
     CreateHistoryDto toCreateDto(HistoryEntity entity);
+
     HistoryEntity toCreateEntity(CreateHistoryDto dto);
 
     HistoryRevenueDto toRevenueDto(HistoryEntity entity);

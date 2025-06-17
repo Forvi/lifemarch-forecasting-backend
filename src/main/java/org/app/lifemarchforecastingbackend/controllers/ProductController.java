@@ -25,6 +25,7 @@ public class ProductController {
             summary = "Создать товар",
             description = "Позволяет получить JSON от модели и создать на его основе записи в БД")
     public ResponseEntity<?> createModelAnswers(@RequestBody String json) {
+        productService.deleteAllProducts();
         modelService.createModelAnswers(json);
         return ResponseEntity.ok("Data successfully received and created in the database");
     }

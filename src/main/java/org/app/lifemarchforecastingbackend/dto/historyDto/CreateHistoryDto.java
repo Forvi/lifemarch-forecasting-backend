@@ -5,7 +5,7 @@ import java.util.Date;
 
 public record CreateHistoryDto(
         String name,
-        Date date,
+        String date,
         Integer countSales,
         BigDecimal revenue,
         Integer writeOffCount
