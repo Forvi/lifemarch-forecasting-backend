@@ -118,7 +118,7 @@ public class CategoryService {
      * */
     public List<CategoryDto> getCategoryByNameSubstring(String name) {
         try {
-            log.debug("Getting category with name: {}...", name);
+            log.debug("Getting category by substring: {}...", name);
 
             List<CategoryDto> category = categoryRepo.findByNameContainingIgnoreCase(name)
                     .stream()

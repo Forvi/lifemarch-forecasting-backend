@@ -7,14 +7,9 @@ import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.app.lifemarchforecastingbackend.dto.historyDto.CreateHistoryDto;
-import org.app.lifemarchforecastingbackend.dto.historyDto.HistoryDto;
-import org.app.lifemarchforecastingbackend.dto.productDto.ProductMapper;
-import org.app.lifemarchforecastingbackend.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
