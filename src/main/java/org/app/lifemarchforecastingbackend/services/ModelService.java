@@ -6,15 +6,12 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductMapper;
-import org.app.lifemarchforecastingbackend.exceptions.OperationErrorException;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductMapper;
 import org.app.lifemarchforecastingbackend.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

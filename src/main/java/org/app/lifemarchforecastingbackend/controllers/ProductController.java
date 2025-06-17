@@ -3,7 +3,7 @@ package org.app.lifemarchforecastingbackend.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductDto;
 import org.app.lifemarchforecastingbackend.services.ModelService;
 import org.app.lifemarchforecastingbackend.services.ProductService;
 import org.springframework.http.ResponseEntity;

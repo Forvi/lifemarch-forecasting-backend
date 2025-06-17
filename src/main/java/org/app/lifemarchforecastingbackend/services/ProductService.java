@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryDto;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryMapper;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductMapper;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductDto;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductMapper;
 import org.app.lifemarchforecastingbackend.entities.CategoryEntity;
 import org.app.lifemarchforecastingbackend.entities.ProductEntity;
 import org.app.lifemarchforecastingbackend.exceptions.NotFoundException;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +47,7 @@ public class ProductService {
             return products;
         } catch (OperationErrorException e) {
             log.error("Failed to get products");
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -67,7 +66,7 @@ public class ProductService {
             return product;
         } catch (OperationErrorException e) {
             log.error("Failed to get product with name: {}", name, e);
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 

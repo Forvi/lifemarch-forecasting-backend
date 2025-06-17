@@ -50,4 +50,6 @@ public class HistoryEntity {
     @Schema(description = "Количество списанных товаров")
     @Column(nullable = false, name = "write_off_count")
     private Integer writeOffCount;
+
+
 }
