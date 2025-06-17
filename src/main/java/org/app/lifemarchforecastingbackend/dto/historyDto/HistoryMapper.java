@@ -7,11 +7,17 @@ import org.mapstruct.Mapper;
 public interface HistoryMapper {
 
     HistoryDto toDto(HistoryEntity entity);
-
-    CreateHistoryDto toCreateDto(HistoryEntity entity);
-
     HistoryEntity toEntity(HistoryDto dto);
 
+    CreateHistoryDto toCreateDto(HistoryEntity entity);
     HistoryEntity toCreateEntity(CreateHistoryDto dto);
 
+    HistoryRevenueDto toRevenueDto(HistoryEntity entity);
+    HistoryEntity toRevenueEntity(HistoryRevenueDto dto);
+
+    HistoryCountSalesDto toCountSalesDto(HistoryEntity entity);
+    HistoryEntity toCountSalesEntity(HistoryCountSalesDto dto);
+
+    HistoryWriteOffDto toWriteOffDto(HistoryEntity entity);
+    HistoryEntity toWriteOffEntity(HistoryWriteOffDto dto);
 }

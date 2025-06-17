@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -37,7 +38,7 @@ public class HistoryEntity {
 
     @Schema(description = "Дата запуска")
     @Column(nullable = false, name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Schema(description = "Количество проданных товаров")
     @Column(nullable = false, name = "count_sales")

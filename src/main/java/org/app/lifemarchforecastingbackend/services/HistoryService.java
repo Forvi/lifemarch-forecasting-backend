@@ -2,9 +2,7 @@ package org.app.lifemarchforecastingbackend.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.app.lifemarchforecastingbackend.dto.historyDto.CreateHistoryDto;
-import org.app.lifemarchforecastingbackend.dto.historyDto.HistoryDto;
-import org.app.lifemarchforecastingbackend.dto.historyDto.HistoryMapper;
+import org.app.lifemarchforecastingbackend.dto.historyDto.*;
 import org.app.lifemarchforecastingbackend.entities.HistoryEntity;
 import org.app.lifemarchforecastingbackend.exceptions.NotFoundException;
 import org.app.lifemarchforecastingbackend.exceptions.OperationErrorException;
@@ -44,6 +42,51 @@ public class HistoryService {
                     .toList();
         } catch (OperationErrorException e) {
             log.error("Failed to get products from history", e);
+            throw e;
+        }
+    }
+
+    public List<HistoryRevenueDto> getRevenueByNameFromHistory(String name) {
+        try {
+            log.debug("Starting to find product revenue by name {}", name);
+
+            return historyRepo
+                    .findAllByName(name)
+                    .stream()
+                    .map(historyMapper::toRevenueDto)
+                    .toList();
+        } catch (OperationErrorException e) {
+            log.error("Failed to find revenue by name {}", name, e);
+            throw e;
+        }
+    }
+
+    public List<HistoryCountSalesDto> getCountSalesByNameFromHistory(String name) {
+        try {
+            log.debug("Starting to find product count sales by name {}", name);
+
+            return historyRepo
+                    .findAllByName(name)
+                    .stream()
+                    .map(historyMapper::toCountSalesDto)
+                    .toList();
+        } catch (OperationErrorException e) {
+            log.error("Failed to find count sales by name {}", name, e);
+            throw e;
+        }
+    }
+
+    public List<HistoryWriteOffDto> getWriteOffByNameFromHistory(String name) {
+        try {
+            log.debug("Starting to find product write-off by name {}", name);
+
+            return historyRepo
+                    .findAllByName(name)
+                    .stream()
+                    .map(historyMapper::toWriteOffDto)
+                    .toList();
+        } catch (OperationErrorException e) {
+            log.error("Failed to find write-off by name {}", name, e);
             throw e;
         }
     }
