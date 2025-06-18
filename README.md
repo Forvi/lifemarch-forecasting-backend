@@ -10,39 +10,55 @@
 
 # Инструкция:
 1. Установите все необходимые модули
+
    - Установите сервис с прогнозом [https://github.com/Forvi/lifemarch-model-forecaste]
+     
    ```
    git clone https://github.com/Forvi/lifemarch-model-forecaste.git
    ```
+
    - Установите клиент [https://github.com/ChityaVerepanov/LifeMarchML]
+
    ```
    git clone https://github.com/ChityaVerepanov/LifeMarchML.git
    ```
-2. Запустите каждый модуль отдельно
+   
+3. Запустите каждый модуль отдельно
+
    - Сервис прогноза
+
    ```
    cd lifemarch-model-forecaste
    ```
+
    ```
    pip install -r requirements.txt
    ```
+
    ```
    fastapi dev main.py
    ```
+
    - Клиент
+
    ```
    cd LifeMarchML
    ```
+
    ```
    ng build --base-href ./ && electron .
    ```
-4. Установить Docker/docker-compose
-5. В директории проекта выполнить команды:
+   
+5. Установить Docker/docker-compose
+
+6. В директории проекта выполнить команды:
 
 ```
 ./gradlew bootJar
 ```
+
 ```
 docker-compose up
 ```
-5. Перейти на http://localhost:8080/swagger-ui/index.html
+
+7. Перейти на http://localhost:8080/swagger-ui/index.html
