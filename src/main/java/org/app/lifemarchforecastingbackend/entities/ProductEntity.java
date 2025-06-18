@@ -31,7 +31,7 @@ public class ProductEntity {
     private Long id;
 
     @Schema(description = "Наименование товара")
-    @Size(min = 2, max = 50, message = "Название товара должно быть от 2 до 50 символов")
+    @Size(min = 2, max = 200, message = "Название товара должно быть от 2 до 50 символов")
     @Column(nullable = false, name = "product_name")
     private String name;
 
