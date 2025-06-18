@@ -3,14 +3,13 @@ package org.app.lifemarchforecastingbackend.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductDto;
 import org.app.lifemarchforecastingbackend.services.ModelService;
 import org.app.lifemarchforecastingbackend.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +25,7 @@ public class ProductController {
             summary = "Создать товар",
             description = "Позволяет получить JSON от модели и создать на его основе записи в БД")
     public ResponseEntity<?> createModelAnswers(@RequestBody String json) {
+        productService.deleteAllProducts();
         modelService.createModelAnswers(json);
         return ResponseEntity.ok("Data successfully received and created in the database");
     }

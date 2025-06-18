@@ -1,11 +1,13 @@
 package org.app.lifemarchforecastingbackend.services;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryDto;
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryMapper;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductDto;
-import org.app.lifemarchforecastingbackend.dto.productDtos.ProductMapper;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductDto;
+import org.app.lifemarchforecastingbackend.dto.productDto.ProductMapper;
 import org.app.lifemarchforecastingbackend.entities.CategoryEntity;
 import org.app.lifemarchforecastingbackend.entities.ProductEntity;
 import org.app.lifemarchforecastingbackend.exceptions.NotFoundException;
@@ -16,12 +18,14 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
+
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
@@ -43,7 +47,7 @@ public class ProductService {
             return products;
         } catch (OperationErrorException e) {
             log.error("Failed to get products");
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -62,7 +66,7 @@ public class ProductService {
             return product;
         } catch (OperationErrorException e) {
             log.error("Failed to get product with name: {}", name, e);
-            throw new OperationErrorException("Error: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -165,6 +169,20 @@ public class ProductService {
                     .toList();
         } catch (OperationErrorException e) {
             log.error("Failed to get products", e);
+            throw e;
+        }
+    }
+
+    // Удаляет все товары из таблицы
+    public void deleteAllProducts() {
+        log.debug("Starting to delete all products...");
+
+        try {
+            productRepo.deleteAllInBatch();
+            entityManager.clear();
+            log.info("All products deleted");
+        } catch (OperationErrorException e) {
+            log.error("Failed to delete all products", e);
             throw e;
         }
     }

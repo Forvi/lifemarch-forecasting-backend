@@ -1,4 +1,4 @@
-package org.app.lifemarchforecastingbackend.dto.productDtos;
+package org.app.lifemarchforecastingbackend.dto.productDto;
 
 import org.app.lifemarchforecastingbackend.dto.categoryDtos.CategoryMapper;
 import org.app.lifemarchforecastingbackend.entities.ProductEntity;
