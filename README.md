@@ -62,3 +62,6 @@ docker-compose up
 ```
 
 7. Перейти на http://localhost:8080/swagger-ui/index.html
+
+## Обзор
+https://github.com/user-attachments/assets/cb0101d1-90aa-406c-832a-86ccbacec49b
